@@ -1,0 +1,21 @@
+{
+  "name": "memory",
+  "version": "0.1.0",
+  "description": "Memory game",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seraco/memory.git"
+  },
+  "author": "seraco",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seraco/memory/issues"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
