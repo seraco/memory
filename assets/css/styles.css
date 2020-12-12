@@ -62,3 +62,15 @@ h1 {
   font-size: 0.75rem;
   margin: auto;
 }
+
+@media only screen and (max-width:1280px) {
+  main {
+    max-width: 768px;
+  }
+}
+
+@media only screen and (max-width:320px) {
+  .card-area {
+    padding: 0.25rem;
+  }
+}
