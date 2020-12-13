@@ -87,12 +87,22 @@ const dogs = [
 
 function Card({ src, alt, caption }) {
   const container = document.createElement('div');
+  const card = document.createElement('div');
+  const front = document.createElement('div');
+  const back = document.createElement('div');
   const img = document.createElement('img');
   const imgCaption = document.createElement('div');
   container.classList.add('card');
+  card.classList.add('surface');
+  card.classList.add('flipped');
+  front.classList.add('front');
+  back.classList.add('back');
   imgCaption.classList.add('caption');
-  container.appendChild(img);
-  container.appendChild(imgCaption);
+  container.appendChild(card);
+  card.appendChild(front);
+  card.appendChild(back);
+  front.appendChild(img);
+  front.appendChild(imgCaption);
   img.src = src;
   img.alt = alt;
   imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
