@@ -87,16 +87,31 @@ const dogs = [
 
 function Card({ src, alt, caption }) {
   const container = document.createElement('div');
+  const card = document.createElement('div');
+  const front = document.createElement('div');
+  const back = document.createElement('div');
   const img = document.createElement('img');
   const imgCaption = document.createElement('div');
   container.classList.add('card');
+  card.classList.add('surface');
+  card.classList.add('flipped');
+  front.classList.add('front');
+  back.classList.add('back');
   imgCaption.classList.add('caption');
-  container.appendChild(img);
-  container.appendChild(imgCaption);
+  container.appendChild(card);
+  card.appendChild(front);
+  card.appendChild(back);
+  front.appendChild(img);
+  front.appendChild(imgCaption);
   img.src = src;
   img.alt = alt;
   imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
-  return container;
+
+  function flipCard() {
+    card.classList.toggle('flipped');
+  }
+
+  return { card: container, flipCard };
 }
 
 function App({ data }) {
@@ -104,13 +119,15 @@ function App({ data }) {
   container.classList.add('board');
   data.forEach(function({ avatarUrl, alt, caption }) {
     const cardArea = document.createElement('div');
-    cardArea.classList.add('card-area');
-    cardArea.appendChild(Card({
+    const { card, flipCard } = Card({
       src: avatarUrl,
       alt,
       caption,
-    }));
+    });
+    cardArea.classList.add('card-area');
+    cardArea.appendChild(card);
     container.appendChild(cardArea);
+    card.addEventListener('click', function() { flipCard(); });
   });
   return container;
 }
