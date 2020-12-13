@@ -166,8 +166,18 @@ function render(component, element) {
     element.removeChild(element.lastChild);
   }
   element.appendChild(component);
-} 
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let x = array[i];
+    array[i] = array[j];
+    array[j] = x;
+  }
+}
 
 window.onload = function() {
+  shuffle(dogs);
   render(App({ data: dogs }), document.getElementById('app'));
 }
