@@ -59,6 +59,15 @@ h1 {
   transform-style: preserve-3d;
 }
 
+.card .surface.flipped {
+  transform: rotateY(180deg);
+  cursor: pointer;
+}
+
+.card .surface:not(.flipped) {
+  cursor: default;
+}
+
 .card .front, .card .back {
   position: absolute;
   width: 100%;
@@ -92,14 +101,6 @@ h1 {
 
 .card .back {
   background-image: url(../images/dog-paw-print.svg);
-  transform: rotateY(180deg);
-}
-
-.card:hover {
-  cursor: pointer;
-}
-
-.surface.flipped {
   transform: rotateY(180deg);
 }
 
