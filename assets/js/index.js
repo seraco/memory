@@ -85,7 +85,7 @@ const dogs = [
   },
 ];
 
-function Card({ src, alt, caption }) {
+function Card({ src, alt, caption, breed }) {
   const container = document.createElement('div');
   const card = document.createElement('div');
   const front = document.createElement('div');
@@ -107,29 +107,58 @@ function Card({ src, alt, caption }) {
   img.alt = alt;
   imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
 
-  function flipCard() {
+  function flip() {
     card.classList.toggle('flipped');
   }
 
-  return { card: container, flipCard };
+  function isShown() {
+    return !card.classList.contains('flipped');
+  }
+
+  return { element: container, flip, isShown, breed };
 }
 
 function App({ data }) {
-  const container = document.createElement('div');
-  container.classList.add('board');
-  data.forEach(function({ avatarUrl, alt, caption }) {
-    const cardArea = document.createElement('div');
-    const { card, flipCard } = Card({
+  const board = document.createElement('div');
+  board.classList.add('board');
+  const listOfCards = data.map(function({ avatarUrl, alt, caption, breed }) {
+    return Card({
       src: avatarUrl,
       alt,
       caption,
+      breed,
     });
-    cardArea.classList.add('card-area');
-    cardArea.appendChild(card);
-    container.appendChild(cardArea);
-    card.addEventListener('click', function() { flipCard(); });
   });
-  return container;
+  let shouldUpdateBoard = false;
+  listOfCards.forEach(function(card) {
+    const cardArea = document.createElement('div');
+    cardArea.classList.add('card-area');
+    cardArea.appendChild(card.element);
+    board.appendChild(cardArea);
+    card.element.addEventListener('click', function() {
+      handleBoardUpdate();
+      if (!card.isShown()) card.flip();
+    });
+  });
+
+  function handleBoardUpdate() {
+    if (shouldUpdateBoard = !shouldUpdateBoard) updateBoard();
+  }
+
+  function updateBoard() {
+    const toFlipMap = {};
+    listOfCards.forEach(function(card) {
+      if (card.isShown()) {
+        if (!toFlipMap[card.breed]) toFlipMap[card.breed] = card;
+        else delete toFlipMap[card.breed];
+      }
+    });
+    for (breed in toFlipMap) {
+      toFlipMap[breed].flip();
+    }
+  }
+
+  return board;
 }
 
 function render(component, element) {
