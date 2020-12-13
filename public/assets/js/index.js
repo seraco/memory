@@ -106,7 +106,12 @@ function Card({ src, alt, caption }) {
   img.src = src;
   img.alt = alt;
   imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
-  return container;
+
+  function flipCard() {
+    card.classList.toggle('flipped');
+  }
+
+  return { card: container, flipCard };
 }
 
 function App({ data }) {
@@ -114,13 +119,15 @@ function App({ data }) {
   container.classList.add('board');
   data.forEach(function({ avatarUrl, alt, caption }) {
     const cardArea = document.createElement('div');
-    cardArea.classList.add('card-area');
-    cardArea.appendChild(Card({
+    const { card, flipCard } = Card({
       src: avatarUrl,
       alt,
       caption,
-    }));
+    });
+    cardArea.classList.add('card-area');
+    cardArea.appendChild(card);
     container.appendChild(cardArea);
+    card.addEventListener('click', function() { flipCard(); });
   });
   return container;
 }

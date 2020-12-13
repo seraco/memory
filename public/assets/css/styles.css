@@ -97,7 +97,7 @@ h1 {
   cursor: pointer;
 }
 
-.card:hover .surface {
+.surface.flipped {
   transform: rotateY(180deg);
 }
 
