@@ -46,6 +46,7 @@ h1 {
   width: 150px;
   height: 200px;
   perspective: 1000px;
+  -webkit-tap-highlight-color: transparent; 
 }
 
 .card .surface {
