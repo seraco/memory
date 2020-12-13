@@ -136,8 +136,10 @@ function App({ data }) {
     cardArea.appendChild(card.element);
     board.appendChild(cardArea);
     card.element.addEventListener('click', function() {
-      handleBoardUpdate();
-      if (!card.isShown()) card.flip();
+      if (!card.isShown()) {
+        handleBoardUpdate();
+        card.flip();
+      }
     });
   });
 
