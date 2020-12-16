@@ -93,8 +93,8 @@ function Card({ src, alt, caption, breed }) {
   const img = document.createElement('img');
   const imgCaption = document.createElement('div');
   container.classList.add('card');
+  container.classList.add('flipped');
   card.classList.add('surface');
-  card.classList.add('flipped');
   front.classList.add('front');
   back.classList.add('back');
   imgCaption.classList.add('caption');
@@ -103,16 +103,16 @@ function Card({ src, alt, caption, breed }) {
   card.appendChild(back);
   front.appendChild(img);
   front.appendChild(imgCaption);
+  imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
   img.src = src;
   img.alt = alt;
-  imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
 
   function flip() {
-    card.classList.toggle('flipped');
+    container.classList.toggle('flipped');
   }
 
   function isShown() {
-    return !card.classList.contains('flipped');
+    return !container.classList.contains('flipped');
   }
 
   return { element: container, flip, isShown, breed };
