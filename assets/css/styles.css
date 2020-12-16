@@ -49,6 +49,11 @@ h1 {
   -webkit-tap-highlight-color: transparent; 
 }
 
+.card.flipped:active {
+  transition: transform 0.07s;
+  transform: scale(0.98);
+}
+
 .card .surface {
   position: relative;
   width: 100%;
@@ -59,12 +64,12 @@ h1 {
   transform-style: preserve-3d;
 }
 
-.card .surface.flipped {
+.card.flipped .surface {
   transform: rotateY(180deg);
   cursor: pointer;
 }
 
-.card .surface:not(.flipped) {
+.card:not(.flipped) .surface {
   cursor: default;
 }
 
