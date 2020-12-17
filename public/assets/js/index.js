@@ -134,18 +134,47 @@ function App({ data }) {
     });
   });
   let shouldUpdateBoard = false;
-  listOfCards.forEach(function(card) {
+  listOfCards.forEach(renderCard);
+
+  function renderCard(card) {
+    let shouldFlipCard = true;
     const cardArea = document.createElement('div');
     cardArea.classList.add('card-area');
     cardArea.appendChild(card.element);
     board.appendChild(cardArea);
-    card.element.addEventListener('mouseup', function() {
-      if (!card.isShown()) {
+    arrangeEventListeners();
+
+    function cancelCardFlipping() {
+      shouldFlipCard = false;
+    }
+
+    function enableCardFlipping() {
+      shouldFlipCard = true;
+    }
+
+    function handleCardClick() {
+      if (shouldFlipCard && !card.isShown()) {
         handleBoardUpdate();
         card.flip();
       }
-    });
-  });
+    }
+
+    function isTouchDevice() {
+      return 'ontouchstart' in window;
+    }
+
+    function arrangeMobileEventListeners() {
+      card.element.addEventListener('touchstart', enableCardFlipping);
+      card.element.addEventListener('touchcancel', cancelCardFlipping);
+      card.element.addEventListener('touchmove', cancelCardFlipping);
+      card.element.addEventListener('touchend', handleCardClick);
+    }
+
+    function arrangeEventListeners() {
+      if (isTouchDevice()) arrangeMobileEventListeners();
+      else card.element.addEventListener('click', handleCardClick);
+    }
+  }
 
   function handleBoardUpdate() {
     if (shouldUpdateBoard = !shouldUpdateBoard) updateBoard();
