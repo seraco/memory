@@ -92,6 +92,7 @@ function Card({ src, alt, caption, breed }) {
   const back = document.createElement('div');
   const img = document.createElement('img');
   const imgCaption = document.createElement('div');
+  const imgBack = document.createElement('img');
   container.classList.add('card');
   container.classList.add('flipped');
   card.classList.add('surface');
@@ -104,8 +105,11 @@ function Card({ src, alt, caption, breed }) {
   front.appendChild(img);
   front.appendChild(imgCaption);
   imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
+  back.appendChild(imgBack);
   img.src = src;
   img.alt = alt;
+  imgBack.src = 'assets/images/dog-paw-print.svg';
+  imgBack.alt = 'Dog paw print'
 
   function flip() {
     container.classList.toggle('flipped');
