@@ -139,7 +139,7 @@ function App({ data }) {
     cardArea.classList.add('card-area');
     cardArea.appendChild(card.element);
     board.appendChild(cardArea);
-    card.element.addEventListener('click', function() {
+    card.element.addEventListener('mouseup', function() {
       if (!card.isShown()) {
         handleBoardUpdate();
         card.flip();
