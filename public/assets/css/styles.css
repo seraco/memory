@@ -32,6 +32,11 @@ h1 {
   text-align: center;
 }
 
+img {
+  user-select: none;
+  pointer-events: none
+}
+
 .board {
   display: flex;
   justify-content: center;
@@ -105,7 +110,6 @@ h1 {
 }
 
 .card .back {
-  background-image: url(../images/dog-paw-print.svg);
   transform: rotateY(180deg);
 }
 
