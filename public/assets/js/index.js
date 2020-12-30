@@ -109,7 +109,7 @@ function Card({ src, alt, caption, breed }) {
   img.src = src;
   img.alt = alt;
   imgBack.src = 'assets/images/dog-paw-print.svg';
-  imgBack.alt = 'Dog paw print'
+  imgBack.alt = 'Dog paw print';
 
   function flip() {
     container.classList.toggle('flipped');
