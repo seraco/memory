@@ -85,31 +85,92 @@ const dogs = [
   },
 ];
 
+function Node({ type, classList, children, text, attributes }) {
+  if (!type) throw new Error('type should be provided to Node');
+  this.element = document.createElement(type);
+  if (classList) this.addClasses(classList);
+  if (children) this.addChildren(children);
+  if (text) this.addTextNode(text);
+  if (attributes) this.addAttributes(attributes);
+}
+
+Node.prototype.addClasses = function(classList) {
+  classList.forEach((function(c) {
+    this.element.classList.add(c);
+  }).bind(this));
+}
+
+Node.prototype.addChildren = function(children) {
+  children.forEach((function(child) {
+    const node = new Node({
+      type: child.type,
+      classList: child.classList,
+      children: child.children,
+      text: child.text,
+      attributes: child.attributes,
+    });
+    this.element.appendChild(node.element);
+  }).bind(this));
+}
+
+Node.prototype.addTextNode = function(text) {
+  this.element.appendChild(document.createTextNode(text));
+}
+
+Node.prototype.addAttributes = function(attributes) {
+  Object.keys(attributes).forEach((function(key) {
+    this.element.setAttribute(key, attributes[key]);
+  }).bind(this));
+}
+
+Node.createNode = function(config) {
+  return new Node(config).element;
+}
+
 function Card({ src, alt, caption, breed }) {
-  const container = document.createElement('div');
-  const card = document.createElement('div');
-  const front = document.createElement('div');
-  const back = document.createElement('div');
-  const img = document.createElement('img');
-  const imgCaption = document.createElement('div');
-  const imgBack = document.createElement('img');
-  container.classList.add('card');
-  container.classList.add('flipped');
-  card.classList.add('surface');
-  front.classList.add('front');
-  back.classList.add('back');
-  imgCaption.classList.add('caption');
-  container.appendChild(card);
-  card.appendChild(front);
-  card.appendChild(back);
-  front.appendChild(img);
-  front.appendChild(imgCaption);
-  imgCaption.appendChild(document.createTextNode(caption.toUpperCase()));
-  back.appendChild(imgBack);
-  img.src = src;
-  img.alt = alt;
-  imgBack.src = 'assets/images/dog-paw-print.svg';
-  imgBack.alt = 'Dog paw print';
+  const container = Node.createNode({
+    type: 'div',
+    classList: ['card', 'flipped'],
+    children: [
+      {
+        type: 'div',
+        classList: ['surface'],
+        children: [
+          {
+            type: 'div',
+            classList: ['front'],
+            children: [
+              {
+                type: 'img',
+                attributes: {
+                  src,
+                  alt,
+                },
+              },
+              {
+                type: 'div',
+                classList: ['caption'],
+                text: caption.toUpperCase(),
+              },
+            ],
+          },
+          {
+            type: 'div',
+            classList: ['back'],
+            children: [
+              {
+                type: 'img',
+                attributes: {
+                  src: 'assets/images/dog-paw-print.svg',
+                  alt: 'Dog paw print',
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
 
   function flip() {
     container.classList.toggle('flipped');
